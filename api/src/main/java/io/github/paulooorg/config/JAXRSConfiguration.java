@@ -8,6 +8,7 @@ import javax.ws.rs.core.Application;
 
 import io.github.paulooorg.exceptions.ApiExceptionMapper;
 import io.github.paulooorg.exceptions.ValidationExceptionMapper;
+import io.github.paulooorg.infra.CorsFilter;
 import io.github.paulooorg.infra.CustomObjectMapper;
 import io.github.paulooorg.resources.CommentResource;
 import io.github.paulooorg.resources.TaskResource;
@@ -36,6 +37,7 @@ public class JAXRSConfiguration extends Application {
     	providers.add(CustomObjectMapper.class);
     	providers.add(ApiExceptionMapper.class);
     	providers.add(ValidationExceptionMapper.class);
+    	providers.add(CorsFilter.class);
         return providers;
     }
 }

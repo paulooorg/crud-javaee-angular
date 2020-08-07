@@ -1,0 +1,24 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>Comments</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+      <button mat-icon-button color="primary" (click)="add(description.value); description.value=''"><mat-icon>create</mat-icon>Add</button>
+      <mat-form-field appearance="standard">
+        <mat-label>Description</mat-label>
+        <textarea matInput #description placeholder="My Description"></textarea>
+      </mat-form-field>
+      
+    <div *ngIf="comments">
+      <mat-card class="example-card" *ngFor="let comment of comments">
+        <mat-card-header>
+          <mat-card-title>#{{comment.id}} - {{comment.creationDate | date:'dd/MM/yyyy hh:mm:ss'}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{comment.description}}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-card-content>
+</mat-card>
