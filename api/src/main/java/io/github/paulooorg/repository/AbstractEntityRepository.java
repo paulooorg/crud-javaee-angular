@@ -1,8 +1,8 @@
 package io.github.paulooorg.repository;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.Optional;
+import io.github.paulooorg.infra.Page;
+import io.github.paulooorg.infra.Pagination;
+import io.github.paulooorg.model.entities.BaseEntity;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -11,10 +11,9 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-
-import io.github.paulooorg.infra.Page;
-import io.github.paulooorg.infra.Pagination;
-import io.github.paulooorg.model.entities.BaseEntity;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Optional;
 
 public abstract class AbstractEntityRepository<E extends BaseEntity, PK extends Serializable> {
 	@Inject
@@ -58,11 +57,8 @@ public abstract class AbstractEntityRepository<E extends BaseEntity, PK extends 
     	Root<E> from = criteriaQuery.from(entityType);
     	CriteriaQuery<E> select = criteriaQuery.select(from);
     	TypedQuery<E> typedQuery = em.createQuery(select);
-    	typedQuery.setFirstResult((pagination.getPage() - 1) * pagination.getPerPage());
-    	typedQuery.setMaxResults(pagination.getPerPage());
-    	List<E> result = typedQuery.getResultList();
-    	
-    	return new Page<E>(result, count, calculateNumberOfPages(count, pagination), Long.valueOf(pagination.getPage()));
+
+    	return paginate(typedQuery, count, pagination);
     }
     
     private long calculateNumberOfPages(Long totalRows, Pagination pagination) {
@@ -80,9 +76,13 @@ public abstract class AbstractEntityRepository<E extends BaseEntity, PK extends 
     
     public Page<E> paginate(Query findQuery, Query countQuery, Pagination pagination) {
     	Long count = (Long) countQuery.getSingleResult();
-    	findQuery.setFirstResult((pagination.getPage() - 1) * pagination.getPerPage());
-    	findQuery.setMaxResults(pagination.getPerPage());
-    	List<E> result = findQuery.getResultList();
-    	return new Page<E>(result, count, calculateNumberOfPages(count, pagination), Long.valueOf(pagination.getPage()));
+    	return paginate(findQuery, count, pagination);
+    }
+
+    private Page<E> paginate(Query findQuery, Long count, Pagination pagination) {
+        findQuery.setFirstResult((pagination.getPage() - 1) * pagination.getPerPage());
+        findQuery.setMaxResults(pagination.getPerPage());
+        List<E> result = findQuery.getResultList();
+        return new Page<E>(result, count, calculateNumberOfPages(count, pagination), Long.valueOf(pagination.getPage()));
     }
 }

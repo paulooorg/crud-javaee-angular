@@ -3,7 +3,7 @@ package io.github.paulooorg.infra;
 import javax.ws.rs.core.UriInfo;
 
 public class Pagination {
-private int page = 1;
+	private int page = 1;
 	
 	private int perPage = 10;
 	
@@ -19,11 +19,6 @@ private int page = 1;
 		if (perPage != null) {
 			this.perPage = Integer.valueOf(perPage);
 		}
-	}
-	
-	public Pagination(int page, int perPage) {
-		this.page = page;
-		this.perPage = perPage;
 	}
 
 	public int getPage() {

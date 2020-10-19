@@ -1,20 +1,16 @@
 package io.github.paulooorg.model.entities;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Comment implements BaseEntity {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
+	private Long number = 1l;
+
 	private String description;
 	
 	@Column(name = "creation_date")
@@ -32,6 +28,14 @@ public class Comment implements BaseEntity {
 	@Override
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getNumber() {
+		return number;
+	}
+
+	public void setNumber(Long number) {
+		this.number = number;
 	}
 
 	public String getDescription() {

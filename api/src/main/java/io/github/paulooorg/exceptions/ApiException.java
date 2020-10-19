@@ -9,7 +9,7 @@ public class ApiException extends RuntimeException {
 	
 	private Object[] params;
 	
-	private String errorCode = ErrorCodes.GENERIC_ERROR;
+	private String errorCode;
 	
 	private Response.Status httpStatus;
 	

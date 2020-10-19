@@ -1,16 +1,8 @@
 package io.github.paulooorg.model.entities;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Task implements BaseEntity {
@@ -35,7 +27,7 @@ public class Task implements BaseEntity {
 	private TaskStatus status = TaskStatus.TODO;
 	
 	@OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
-	//@OrderBy("creationDate DESC")
+	@OrderBy("creationDate DESC")
 	private List<Comment> comments;
 	
 	@Override

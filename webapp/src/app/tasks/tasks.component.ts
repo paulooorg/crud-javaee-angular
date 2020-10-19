@@ -11,11 +11,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./tasks.component.css']
 })
 export class TasksComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'creationDate', 'status', 'updateDate', 'title', 'description', 'options'];
+  displayedColumns: string[] = ['id', 'title', 'status', 'creationDate', 'updateDate', 'options'];
 
   dataSource: MatTableDataSource<Task>;
 
   resultsLength = 0;
+
+  pageSize = 10;
 
   searchText;
 
@@ -24,7 +26,7 @@ export class TasksComponent implements AfterViewInit {
   constructor(private taskService: TaskService, private snackBar: MatSnackBar) { }
 
   ngAfterViewInit(): void {
-    this.getTasks(1, 10);
+    this.getTasks(1, this.pageSize);
   }
 
   getServerData(event: PageEvent) {
@@ -56,9 +58,9 @@ export class TasksComponent implements AfterViewInit {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     this.searchText = filterValue;
     if (this.searchText) {
-      this.search(1, 10);
+      this.search(1, this.pageSize);
     } else {
-      this.getTasks(1, 10);
+      this.getTasks(1, this.pageSize);
     }
   }
 
@@ -69,7 +71,7 @@ export class TasksComponent implements AfterViewInit {
         horizontalPosition: 'center',
         verticalPosition: 'top'
       });
-      this.getTasks(1, 10);
+      this.getTasks(1, this.pageSize);
     });
   }
 }

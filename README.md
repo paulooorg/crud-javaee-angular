@@ -1,3 +1,2 @@
-# crud-javaee-angular
+# Simple CRUD App with Java EE and Angular
 
-# WIP

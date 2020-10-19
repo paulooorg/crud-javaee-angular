@@ -1,11 +1,11 @@
 package io.github.paulooorg.repository;
 
-import javax.persistence.Query;
-
 import io.github.paulooorg.infra.Page;
 import io.github.paulooorg.infra.Pagination;
 import io.github.paulooorg.model.entities.Task;
 import io.github.paulooorg.model.entities.TaskStatus;
+
+import javax.persistence.Query;
 
 public class TaskRepository extends AbstractEntityRepository<Task, Long> {
 	public TaskRepository() {

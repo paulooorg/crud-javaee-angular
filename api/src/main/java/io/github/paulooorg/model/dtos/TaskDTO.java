@@ -1,12 +1,11 @@
 package io.github.paulooorg.model.dtos;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import io.github.paulooorg.model.entities.TaskStatus;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import io.github.paulooorg.model.entities.TaskStatus;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class TaskDTO {
 	private Long id;

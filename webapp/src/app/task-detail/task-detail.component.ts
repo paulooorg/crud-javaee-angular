@@ -1,12 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { TaskService } from '../task.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Status } from '../status';
 import { StatusService } from '../status.service';
 import { Task } from '../task';
-import { Status } from '../status';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { TaskService } from '../task.service';
+//import * as ClassicEditor from '@ckeditor/ckeditor5-angular';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-task-detail',
@@ -16,6 +17,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class TaskDetailComponent implements OnInit {
 
   @Input() task: Task;
+
+  public Editor = ClassicEditor;
 
   statuses: Status[];
 
@@ -29,6 +32,7 @@ export class TaskDetailComponent implements OnInit {
 
   getTask(): void {
     this.task = {} as Task;
+    this.task.description = "";
     const id = +this.route.snapshot.paramMap.get('id');
     if (id) {
       this.taskService.findById(id).subscribe(task => this.task = task);

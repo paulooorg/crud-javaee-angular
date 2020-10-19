@@ -1,12 +1,13 @@
 package io.github.paulooorg.model.dtos;
 
-import java.time.LocalDateTime;
-
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 public class CommentDTO {
 	private Long id;
-	
+
+	private Long number;
+
 	@NotBlank
 	private String description;
 	
@@ -18,6 +19,14 @@ public class CommentDTO {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getNumber() {
+		return number;
+	}
+
+	public void setNumber(Long number) {
+		this.number = number;
 	}
 
 	public String getDescription() {

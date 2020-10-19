@@ -1,11 +1,5 @@
 package io.github.paulooorg.config;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
-
 import io.github.paulooorg.exceptions.ApiExceptionMapper;
 import io.github.paulooorg.exceptions.ValidationExceptionMapper;
 import io.github.paulooorg.infra.CorsFilter;
@@ -13,6 +7,11 @@ import io.github.paulooorg.infra.CustomObjectMapper;
 import io.github.paulooorg.resources.CommentResource;
 import io.github.paulooorg.resources.TaskResource;
 import io.github.paulooorg.resources.TaskStatusResource;
+
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+import java.util.HashSet;
+import java.util.Set;
 
 @ApplicationPath("api/v1")
 public class JAXRSConfiguration extends Application {

@@ -1,11 +1,5 @@
 package io.github.paulooorg.service;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-
 import io.github.paulooorg.exceptions.ApiExceptions;
 import io.github.paulooorg.infra.Page;
 import io.github.paulooorg.infra.Pagination;
@@ -14,6 +8,11 @@ import io.github.paulooorg.model.dtos.mapper.CommentMapper;
 import io.github.paulooorg.model.entities.Comment;
 import io.github.paulooorg.model.entities.Task;
 import io.github.paulooorg.repository.CommentRepository;
+
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CommentService {
 	@Inject
@@ -42,6 +41,8 @@ public class CommentService {
 	
 	@Transactional
 	public Long create(Comment comment) {
+		Long commentNumber = commentRepository.findLastCommentNumber(comment.getTask().getId()) + 1;
+		comment.setNumber(commentNumber);
 		return commentRepository.save(comment).get().getId();
 	}
 }

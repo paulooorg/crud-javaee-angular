@@ -1,10 +1,10 @@
 package io.github.paulooorg.repository;
 
-import javax.persistence.Query;
-
 import io.github.paulooorg.infra.Page;
 import io.github.paulooorg.infra.Pagination;
 import io.github.paulooorg.model.entities.Comment;
+
+import javax.persistence.Query;
 
 public class CommentRepository extends AbstractEntityRepository<Comment, Long> {
 	public CommentRepository() {
@@ -21,5 +21,17 @@ public class CommentRepository extends AbstractEntityRepository<Comment, Long> {
 		countQuery.setParameter("taskId", taskId);
 		
 		return paginate(findQuery, countQuery, pagination);
+	}
+
+	public Long findLastCommentNumber(Long taskId) {
+		try {
+			Query query = em.createQuery("select c.number from Comment c where c.task.id = :taskId order by c.number desc");
+			query.setMaxResults(1);
+			query.setParameter("taskId", taskId);
+			Long lastNumber = (Long) query.getSingleResult();
+			return lastNumber;
+		} catch (Exception e) {
+			return 0l;
+		}
 	}
 }

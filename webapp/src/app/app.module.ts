@@ -23,6 +23,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TaskCommentComponent } from './task-comment/task-comment.component';
+import { MarkdownModule } from 'ngx-markdown';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { NgxWigModule } from 'ngx-wig';
 
 @NgModule({
   declarations: [
@@ -49,7 +53,11 @@ import { TaskCommentComponent } from './task-comment/task-comment.component';
     AppRoutingModule,
     MatGridListModule,
     MatSelectModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MarkdownModule.forRoot(),
+    CKEditorModule,
+    MatExpansionModule,
+    NgxWigModule
   ],
   providers: [],
   bootstrap: [AppComponent]

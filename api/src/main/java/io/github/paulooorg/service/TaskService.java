@@ -1,5 +1,6 @@
 package io.github.paulooorg.service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -54,6 +55,7 @@ public class TaskService {
 		Optional<Task> task = findById(id);
 		if (task.isPresent()) {
 			Task updatedTask = TaskMapper.INSTANCE.merge(taskDTO, task.get());
+			updatedTask.setUpdateDate(LocalDateTime.now());
 			taskRepository.save(updatedTask);
 		}
 	}

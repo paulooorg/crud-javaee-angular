@@ -1,17 +1,16 @@
 package io.github.paulooorg.infra;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import io.github.paulooorg.exceptions.ErrorCodes;
+import io.github.paulooorg.exceptions.FieldError;
+import io.github.paulooorg.exceptions.ValidationException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-
-import io.github.paulooorg.exceptions.ErrorCodes;
-import io.github.paulooorg.exceptions.FieldError;
-import io.github.paulooorg.exceptions.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class BeanValidator<T> {
 	public void validate(T bean) {

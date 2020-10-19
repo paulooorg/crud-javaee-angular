@@ -14,7 +14,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
-        <deltaspike.version>1.9.4</deltaspike.version>
+
+        <version.wildfly>21.0.0.Final</version.wildfly>
+        <plugin.fork.embedded>true</plugin.fork.embedded>
+        <version.bootable.jar>2.0.0.Final</version.bootable.jar>
     </properties>
 
 	<dependencies>
@@ -22,6 +25,12 @@
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>8.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>antlr</groupId>
+            <artifactId>antlr</artifactId>
+            <version>2.7.7</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -75,8 +84,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>11</source>
+                    <target>11</target>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.mapstruct</groupId>
@@ -110,5 +119,51 @@
     			</plugins>
     		</build>
     	</profile>
+        <profile>
+            <id>wildfly-jar</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.wildfly.plugins</groupId>
+                        <artifactId>wildfly-jar-maven-plugin</artifactId>
+                        <version>${version.bootable.jar}</version>
+                        <configuration>
+                            <jvmArguments>
+                                <arg>-agentlib:jdwp=transport=dt_socket,address=8787,server=y,suspend=n</arg>
+                            </jvmArguments>
+                            <feature-packs>
+                                <feature-pack>
+                                    <location>wildfly@maven(org.jboss.universe:community-universe)#${version.wildfly}</location>
+                                </feature-pack>
+                                <feature-pack>
+                                    <groupId>org.wildfly</groupId>
+                                    <artifactId>wildfly-datasources-galleon-pack</artifactId>
+                                    <version>1.1.0.Final</version>
+                                </feature-pack>
+                            </feature-packs>
+                            <layers>
+                                <layer>jaxrs</layer>
+                                <layer>jpa</layer>
+                                <layer>postgresql-datasource</layer>
+                                <layer>management</layer>
+                            </layers>
+                            <excluded-layers>
+                                <layer>deployment-scanner</layer>
+                            </excluded-layers>
+                            <plugin-options>
+                                <jboss-fork-embedded>${plugin.fork.embedded}</jboss-fork-embedded>
+                            </plugin-options>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>package</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 </project>

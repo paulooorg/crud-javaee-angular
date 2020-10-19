@@ -5,11 +5,14 @@ import { catchError, map, tap, take } from 'rxjs/operators';
 import { Task } from './task';
 import { Page } from './page';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
+  private API_URL= environment.API_URL;
+
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -17,22 +20,22 @@ export class TaskService {
   constructor(private http: HttpClient, private snackBar: MatSnackBar) { }
 
   findById(id: Number): Observable<Task> {
-    let taskUrl = `http://localhost:8080/api/v1/task/${id}`;
+    let taskUrl = `${this.API_URL}/api/v1/task/${id}`;
     return this.http.get<Task>(taskUrl);
   }
 
   getTasks(page: Number, pageSize: Number): Observable<Page<Task>> {
-    let tasksUrl = `http://localhost:8080/api/v1/task?per_page=${pageSize}&page=${page}`;
+    let tasksUrl = `${this.API_URL}/api/v1/task?per_page=${pageSize}&page=${page}`;
     return this.http.get<Page<Task>>(tasksUrl);
   }
 
   search(term: string, page: Number, pageSize: Number): Observable<Page<Task>> {
-    let tasksUrl = `http://localhost:8080/api/v1/task/search/${term}?per_page=${pageSize}&page=${page}`;
+    let tasksUrl = `${this.API_URL}/api/v1/task/search/${term}?per_page=${pageSize}&page=${page}`;
     return this.http.get<Page<Task>>(tasksUrl);
   }
 
   save(task: Task): Observable<Task> {
-    let taskUrl = `http://localhost:8080/api/v1/task`;
+    let taskUrl = `${this.API_URL}/api/v1/task`;
     if (task.id) {
       // update
       return this.http.put<Task>(taskUrl + `/${task.id}`, task);
@@ -43,7 +46,7 @@ export class TaskService {
   }
 
   delete(task: Task) {
-    let taskUrl = `http://localhost:8080/api/v1/task/${task.id}`;
+    let taskUrl = `${this.API_URL}/api/v1/task/${task.id}`;
     return this.http.delete(taskUrl);
   }
 

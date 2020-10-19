@@ -9,11 +9,10 @@ import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.sql.DataSource;
-import java.sql.SQLException;
 
 @ApplicationScoped
 public class LiquibaseProducer {
-	@Resource(lookup = "java:/datasources/crudapiDS")
+	@Resource(lookup = "java:jboss/datasources/PostgreSQLDS")
     private DataSource dataSource;
 	
 	@Produces
@@ -26,7 +25,7 @@ public class LiquibaseProducer {
 
     @Produces
     @LiquibaseType
-    public DataSource createDataSource() throws SQLException {
+    public DataSource createDataSource() {
     	return dataSource;
     }
 
